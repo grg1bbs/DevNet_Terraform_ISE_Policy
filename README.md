@@ -102,3 +102,30 @@ Wireless Controllers
    - AireOS WLC Admin
    - IOS-XE WLC Monitor
    - IOS-XE WLC Admin
+
+## Network Access Policy Set Configuration Example
+<img width="1336" alt="DevNet_TF_ISE_Policy_Sets" src="https://github.com/grg1bbs/DevNet_Terraform_ISE_Policy/assets/103554967/ae768fd5-fc04-4ac3-9dc8-78474925b151">
+
+### Network Access - Wired Monitor Mode Policy Set Example
+<img width="1490" alt="DevNet_TF_ISE_MM_AuthC_Policy" src="https://github.com/grg1bbs/DevNet_Terraform_ISE_Policy/assets/103554967/ba0154a0-b4a0-4401-9726-8f7fa9eb8bf9">
+<img width="1490" alt="DevNet_TF_ISE_MM_AuthZ_Policy_DefaultDeny" src="https://github.com/grg1bbs/DevNet_Terraform_ISE_Policy/assets/103554967/9fb263db-89c9-42de-b688-4ab82906a421">
+
+### Network Access - Corp Wireless Policy Set Example
+<img width="1490" alt="DevNet_TF_ISE_Wireless_AuthC_Policy" src="https://github.com/grg1bbs/DevNet_Terraform_ISE_Policy/assets/103554967/73a9b3c0-ecf5-4b4a-9fcf-0222f1f4728d">
+<img width="1490" alt="DevNet_TF_ISE_Wireless_AuthZ_Policy" src="https://github.com/grg1bbs/DevNet_Terraform_ISE_Policy/assets/103554967/c8782cd6-9449-4bea-a462-7839255e3fb0">
+
+## Device Admin Policy Set Configuration Example
+<img width="1342" alt="DevNet_TF_ISE_DevAdmin_Policy_Sets" src="https://github.com/grg1bbs/DevNet_Terraform_ISE_Policy/assets/103554967/ab9b6e7c-f7b6-43f9-913a-6513a3259fab">
+
+## Device Admin - Routers & Switches Policy Set Example
+<img width="1407" alt="DevNet_TF_ISE_RouterSwitch_AuthC_Policy" src="https://github.com/grg1bbs/DevNet_Terraform_ISE_Policy/assets/103554967/8d257c2a-e80c-4295-8515-55a14a18b31f">
+<img width="1407" alt="DevNet_TF_ISE_RouterSwitch_AuthZ_Policy" src="https://github.com/grg1bbs/DevNet_Terraform_ISE_Policy/assets/103554967/dcf5462e-75f3-4bb2-af27-362d7177ecd9">
+
+## Device Admin - WLC Policy Set Example
+<img width="1407" alt="DevNet_TF_ISE_WLC_AuthC_Policy" src="https://github.com/grg1bbs/DevNet_Terraform_ISE_Policy/assets/103554967/61d829af-2317-4e2e-b1f6-b1e9a66a36ad">
+<img width="1418" alt="DevNet_TF_ISE_WLC_AuthZ_Policy" src="https://github.com/grg1bbs/DevNet_Terraform_ISE_Policy/assets/103554967/ddbb942b-181e-471e-936e-7092720e2b81">
+
+
+
+
+
