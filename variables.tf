@@ -2,13 +2,13 @@
 ## The AD admin username/password variables can also be referenced by standard options like local environment variables, *.tfvars file, etc.
 
 variable "ad_admin_name" {
-  default     = "grgibbs"
+  default     = "<admin user>"
   description = "AD Domain username used to join ISE to the domain"
   sensitive   = true
 }
 
 variable "ad_admin_password" {
-  default     = "Spasm0lyt1c"
+  default     = "<admin password>"
   description = "AD Domain password used to join ISE to the domain"
   sensitive   = true
 }
