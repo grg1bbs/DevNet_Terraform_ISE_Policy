@@ -127,7 +127,7 @@ Wireless Controllers
 <img width="1407" alt="DevNet_TF_ISE_WLC_AuthC_Policy" src="https://github.com/grg1bbs/DevNet_Terraform_ISE_Policy/assets/103554967/61d829af-2317-4e2e-b1f6-b1e9a66a36ad">
 <img width="1418" alt="DevNet_TF_ISE_WLC_AuthZ_Policy" src="https://github.com/grg1bbs/DevNet_Terraform_ISE_Policy/assets/103554967/ddbb942b-181e-471e-936e-7092720e2b81">
 
-### Cavaets & Limitations
+### Caveats & Limitations
 
 This code currently uses only the default Certificate Authentication Profile (CAP) due to the following known bug:
 https://bst.cloudapps.cisco.com/bugsearch/bug/CSCwe48292
