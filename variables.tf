@@ -2,24 +2,24 @@
 ## The AD admin username/password variables can also be referenced by standard options like local environment variables, *.tfvars file, etc.
 
 variable "ad_admin_name" {
-  default     = "grgibbs"
+  default     = "<ad user>"
   description = "AD Domain username used to join ISE to the domain"
   sensitive   = true
 }
 
 variable "ad_admin_password" {
-  default     = "Spasm0lyt1c"
+  default     = "<ad password>"
   description = "AD Domain password used to join ISE to the domain"
   sensitive   = true
 }
 
 variable "domain_name" {
-  default     = "trappedunderise.com"
+  default     = "<domain name>"
   description = "AD Domain name used when joining ISE to the domain"
 }
 
 variable "join_point_name" {
-  default     = "ISELAB_AD"
+  default     = "<join_point_name"
   description = "Name defined for the Active Directory Join Point in ISE"
   sensitive   = true
 }
@@ -86,7 +86,7 @@ variable "authc_policy_mab" {
 }
 
 variable "corp_wireless_ssid" {
-  default     = ":iselabemp"
+  default     = ":<ssid>"
   description = "Name of the Corporate secure SSID, including the preceding colon (:) used as a matching condtion for the Corp Wireless Policy Set"
 }
 
@@ -106,15 +106,3 @@ variable "sgt_corp_user" {
   default     = "SG_Corp_User"
   description = "Security Group name for Corporate Users"
 }
-
-## Variables used in Device Admin Policy elements
-
-# variable "ad_group_net_readonly" {
-#   default     = "trappedunderise.com/Users/Net Monitor"
-#   description = "AD Group for Network Read Only admins"
-# }
-# 
-# variable "ad_group_net_admin" {
-#   default     = "trappedunderise.com/Users/Net Admin"
-#   description = "AD Group for Network Read Only admins"
-# }
