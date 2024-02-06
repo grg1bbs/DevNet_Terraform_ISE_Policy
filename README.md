@@ -116,7 +116,7 @@ Wireless Controllers
    - IOS-XE WLC Admin
 
 ## Network Access Policy Set Configuration Example
-<img width="1336" alt="DevNet_TF_ISE_Policy_Sets" src="https://github.com/grg1bbs/DevNet_Terraform_ISE_Policy/assets/103554967/ae768fd5-fc04-4ac3-9dc8-78474925b151">
+<img width="1323" alt="DevNet_TF_ISE_Policy_Sets" src="https://github.com/grg1bbs/DevNet_Terraform_ISE_Policy/assets/103554967/f9fff675-3090-48db-a9d1-fac6e0480cfe">
 
 ### Network Access - Wired Monitor Mode Policy Set Example
 <img width="1490" alt="DevNet_TF_ISE_MM_AuthC_Policy" src="https://github.com/grg1bbs/DevNet_Terraform_ISE_Policy/assets/103554967/ba0154a0-b4a0-4401-9726-8f7fa9eb8bf9">
