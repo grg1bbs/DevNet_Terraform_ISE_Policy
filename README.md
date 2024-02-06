@@ -35,12 +35,13 @@ The following Policy Elements and Policy Sets are created by this code:
   
 ### Network Access Policy Elements
 
- - Allowed Protocols list named 'MAB_EAP-TLS' with the following protocols enabled:
+ - Allowed Protocols list named 'MAB_Dot1x' with the following protocols enabled:
    - Process Host Lookup (MAB)
    - EAP-TLS
+   - TEAP (with EAP Chaining)
  - Allowed Protocols list named 'EAP-TLS' with the following protocols enabled:
    - EAP-TLS
- - Certificate Authentication Profile (for EAP-TLS) :warning: Using default CAP due to bug
+ - Certificate Authentication Profile (for EAP-TLS and TEAP[EAP-TLS]) :warning: Using default CAP due to bug
  - Identity Source Sequence with CAP & AD
  - Network Device Group (NDG) structure for Deployment Stage (Monitor Mode & Low Impact Mode)
  - Downloadable ACLs and AuthZ Profiles
@@ -49,30 +50,39 @@ The following Policy Elements and Policy Sets are created by this code:
   
 ### Network Access Policy Sets
 
-Wired_MM
+#### Wired MM
  - AuthC Policies
+   - Dot1x TEAP
    - Dot1x EAP-TLS
    - MAB
  - AuthZ Policies
-   - AD User + Corporate Users SGT
-   - AD Computer + Corporate Users SGT
+   - (TEAP) AD User EAP Chained + Corporate Users SGT
+   - (TEAP) AD Computer + Corporate Users SGT
+   - (EAP-TLS) AD User + Corporate Users SGT
+   - (EAP-TLS) AD Computer + Corporate Users SGT
    - Default (updated AuthZ Profile) :warning: Pending Issue with Import
 
-Wired_LIM
+#### Wired LIM
  - AuthC Policies
+   - Dot1x TEAP
    - Dot1x EAP-TLS
    - MAB
  - AuthZ Policies
-   - AD User + Corporate Users SGT
-   - AD Computer + Corporate Users SGT
+   - (TEAP) AD User EAP Chained + Corporate Users SGT
+   - (TEAP) AD Computer + Corporate Users SGT
+   - (EAP-TLS) AD User + Corporate Users SGT
+   - (EAP-TLS) AD Computer + Corporate Users SGT
    - Default (updated AuthZ Profile) :warning: Pending Issue with Import
    
-Wireless_Secure
+#### Wireless Secure
  - AuthC Policy
+   - Dot1x TEAP
    - Dot1x EAP-TLS
  - AuthZ Policies
-   - AD User + Corporate Users SGT
-   - AD Computer + Corporate Users SGT
+   - (TEAP) AD User EAP Chained + Corporate Users SGT
+   - (TEAP) AD Computer + Corporate Users SGT
+   - (EAP-TLS) AD User + Corporate Users SGT
+   - (EAP-TLS) AD Computer + Corporate Users SGT
 
 ## Device Admin Policy Elements
 
