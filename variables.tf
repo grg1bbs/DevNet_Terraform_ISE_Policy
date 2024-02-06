@@ -19,7 +19,7 @@ variable "domain_name" {
 }
 
 variable "join_point_name" {
-  default     = "<join_point_name"
+  default     = "<join_point_name>"
   description = "Name defined for the Active Directory Join Point in ISE"
   sensitive   = true
 }
