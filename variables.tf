@@ -2,13 +2,13 @@
 ## The AD admin username/password variables can also be referenced by standard options like local environment variables, *.tfvars file, etc.
 
 variable "ad_admin_name" {
-  default     = "<admin user>"
+  default     = "grgibbs"
   description = "AD Domain username used to join ISE to the domain"
   sensitive   = true
 }
 
 variable "ad_admin_password" {
-  default     = "<admin password>"
+  default     = "Spasm0lyt1c"
   description = "AD Domain password used to join ISE to the domain"
   sensitive   = true
 }
@@ -60,6 +60,11 @@ variable "ps_wired_lim_name" {
   description = "Name defined for the Wired Low Impact Mode Policy Set"
 }
 
+variable "authc_policy_teap" {
+  default     = "Dot1x TEAP"
+  description = "Name defined for the 802.1x TEAP Authentication Policy for all Policy Sets"
+}
+
 variable "authc_policy_eaptls" {
   default     = "Dot1x EAP-TLS"
   description = "Name defined for the 802.1x EAP-TLS Authentication Policy for all Policy Sets"
@@ -86,7 +91,7 @@ variable "corp_wireless_ssid" {
 }
 
 variable "ps_corp_wireless_name" {
-  default     = "Wireless_Secure"
+  default     = "Wireless Secure"
   description = "Name defined for the Corporate Wireless Policy Set"
 }
 

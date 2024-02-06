@@ -1,6 +1,43 @@
 
 ## Create Allowed Protocols Lists
 
+resource "ise_allowed_protocols" "mab_dot1x" {
+  name                         = "MAB_Dot1x"
+  description                  = "MAB, EAP-TLS, and TEAP protocols"
+  process_host_lookup          = true
+  allow_pap_ascii              = false
+  allow_chap                   = false
+  allow_ms_chap_v1             = false
+  allow_ms_chap_v2             = false
+  allow_eap_md5                = false
+  allow_eap_tls                = true
+  allow_leap                   = false
+  allow_peap                   = false
+  allow_eap_fast               = false
+  allow_eap_ttls               = false
+  allow_teap                   = true
+  allow_preferred_eap_protocol = false
+  eap_tls_l_bit                = false
+  allow_weak_ciphers_for_eap   = false
+  require_message_auth         = false
+
+  eap_tls_allow_auth_of_expired_certs     = false
+  eap_tls_enable_stateless_session_resume = true
+  eap_tls_session_ticket_ttl              = 5
+  eap_tls_session_ticket_ttl_unit         = "HOURS"
+  eap_tls_session_ticket_percentage       = 10
+
+  teap_eap_ms_chap_v2                               = true
+  teap_eap_ms_chap_v2_pwd_change                    = true
+  teap_eap_ms_chap_v2_pwd_change_retries            = 3
+  teap_eap_tls                                      = true
+  teap_eap_tls_auth_of_expired_certs                = true
+  teap_eap_accept_client_cert_during_tunnel_est     = true
+  teap_eap_chaining                                 = true
+  teap_downgrade_msk                                = true
+  teap_request_basic_pwd_auth                       = true
+}
+
 resource "ise_allowed_protocols" "mab_eaptls" {
   name                         = "MAB_EAP-TLS"
   description                  = ""
