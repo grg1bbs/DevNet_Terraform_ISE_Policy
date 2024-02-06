@@ -119,12 +119,15 @@ Wireless Controllers
 <img width="1323" alt="DevNet_TF_ISE_Policy_Sets" src="https://github.com/grg1bbs/DevNet_Terraform_ISE_Policy/assets/103554967/f9fff675-3090-48db-a9d1-fac6e0480cfe">
 
 ### Network Access - Wired Monitor Mode Policy Set Example
-<img width="1490" alt="DevNet_TF_ISE_MM_AuthC_Policy" src="https://github.com/grg1bbs/DevNet_Terraform_ISE_Policy/assets/103554967/ba0154a0-b4a0-4401-9726-8f7fa9eb8bf9">
-<img width="1490" alt="DevNet_TF_ISE_MM_AuthZ_Policy_DefaultDeny" src="https://github.com/grg1bbs/DevNet_Terraform_ISE_Policy/assets/103554967/9fb263db-89c9-42de-b688-4ab82906a421">
+<img width="1473" alt="DevNet_TF_ISE_MM_AuthC_Policy" src="https://github.com/grg1bbs/DevNet_Terraform_ISE_Policy/assets/103554967/c3b8802d-3d35-497b-be56-13e49a30c080">
+<img width="1473" alt="DevNet_TF_ISE_MM_AuthC_Policy_Default" src="https://github.com/grg1bbs/DevNet_Terraform_ISE_Policy/assets/103554967/2e00d64d-b0c1-40da-9aa3-e9c7c629e57a">
+<img width="1473" alt="DevNet_TF_ISE_MM_AuthZ_Policy" src="https://github.com/grg1bbs/DevNet_Terraform_ISE_Policy/assets/103554967/0579f612-0f74-4b35-bbca-6c482d5e926a">
+<img width="1473" alt="DevNet_TF_ISE_MM_AuthZ_Policy_DefaultDeny" src="https://github.com/grg1bbs/DevNet_Terraform_ISE_Policy/assets/103554967/5e81ea05-5fc7-4d70-ba2b-858ee454c093">
 
 ### Network Access - Corp Wireless Policy Set Example
-<img width="1490" alt="DevNet_TF_ISE_Wireless_AuthC_Policy" src="https://github.com/grg1bbs/DevNet_Terraform_ISE_Policy/assets/103554967/73a9b3c0-ecf5-4b4a-9fcf-0222f1f4728d">
-<img width="1490" alt="DevNet_TF_ISE_Wireless_AuthZ_Policy" src="https://github.com/grg1bbs/DevNet_Terraform_ISE_Policy/assets/103554967/c8782cd6-9449-4bea-a462-7839255e3fb0">
+<img width="1473" alt="DevNet_TF_ISE_Wireless_AuthC_Policy" src="https://github.com/grg1bbs/DevNet_Terraform_ISE_Policy/assets/103554967/2a973f03-4a66-45fa-846c-0f01d80512dd">
+<img width="1473" alt="DevNet_TF_ISE_Wireless_AuthZ_Policy" src="https://github.com/grg1bbs/DevNet_Terraform_ISE_Policy/assets/103554967/86137e91-2c58-4aca-9a20-3b614ccb226f">
+<img width="1473" alt="DevNet_TF_ISE_Wireless_AuthZ_Policy_Default" src="https://github.com/grg1bbs/DevNet_Terraform_ISE_Policy/assets/103554967/92ee2046-f291-4cf1-9a18-e086dcadfbd6">
 
 ## Device Admin Policy Set Configuration Example
 <img width="1342" alt="DevNet_TF_ISE_DevAdmin_Policy_Sets" src="https://github.com/grg1bbs/DevNet_Terraform_ISE_Policy/assets/103554967/ab9b6e7c-f7b6-43f9-913a-6513a3259fab">
