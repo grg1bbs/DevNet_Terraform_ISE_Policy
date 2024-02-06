@@ -43,12 +43,18 @@ resource "ise_network_device_group" "ndg_cisco_switch" {
 }
 
 resource "ise_network_device_group" "ndg_cisco_router" {
+  depends_on = [
+    ise_network_device_group.ndg_cisco_switch
+   ]
   description = "Cisco IOS/IOS-XE routers"
   name        = "Device Type#All Device Types#Cisco Router"
   root_group  = "Device Type"
 }
 
 resource "ise_network_device_group" "ndg_cisco_wlc" {
+  depends_on = [
+  ise_network_device_group.ndg_cisco_router
+  ]
   description = "Cisco Wireless LAN Controllers"
   name        = "Device Type#All Device Types#Cisco WLC"
   root_group  = "Device Type"
