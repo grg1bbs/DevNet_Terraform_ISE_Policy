@@ -4,7 +4,7 @@ terraform {
   required_providers {
     ise = {
       source  = "CiscoDevNet/ise"
-      version = ">= 0.1.12"
+      version = ">= 0.1.13"
     }
     time = {
       source = "hashicorp/time"
@@ -14,8 +14,8 @@ terraform {
 }
 
 provider "ise" {
-  username = "ersadmin1"
-  password = "cisco123"
-  url      = "https://ise32-3.ise.trappedunderise.com"
+  username = "<ers admin>"
+  password = "<password>"
+  url      = "<Primary PAN FQDN>"
 }
 
