@@ -1,13 +1,3 @@
-## Issue a 10 second sleep timer before creating the Network Access Policy Set
-## This is necessary to mitigate a race condition with the creation of the Network Device Groups and Allowed Protocols
-
-resource "time_sleep" "wireless_wait_10_seconds" {
-  depends_on = [
-    ise_network_access_policy_set.ps_wired_mm,
-    ise_network_access_policy_set.ps_wired_lim
-  ]
-  create_duration = "10s"
-}
 
 ## Get the id for the built-in condition - Wireless_802.1X
 
@@ -19,7 +9,8 @@ data "ise_network_access_condition" "wireless_dot1x" {
 
 resource "ise_network_access_policy_set" "ps_wireless_secure" {
   depends_on = [
-    time_sleep.wireless_wait_10_seconds
+    ise_network_access_policy_set.ps_wired_mm,
+    ise_network_access_policy_set.ps_wired_lim
   ]
   name                = var.ps_corp_wireless_name
   description         = "Corp Wireless"

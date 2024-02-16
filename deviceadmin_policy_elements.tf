@@ -16,13 +16,27 @@ resource "ise_network_device_group" "ndg_wlc_os_type" {
   root_group  = "WLC OS Type"
 }
 
-resource "ise_network_device_group" "ndg_wlc_airos" {
+# Wait 5 seconds to mitigate API race condition
+resource "time_sleep" "ndg_wlc_os_wait" {
+  depends_on = [ise_network_device_group.ndg_wlc_os_type]
+  create_duration  = "5s"
+  destroy_duration = "5s"
+}
+
+resource "ise_network_device_group" "ndg_wlc_aireos" {
   depends_on = [ 
     ise_network_device_group.ndg_wlc_os_type
    ]
   description = "AirOS WLCs"
   name        = "WLC OS Type#WLC OS Type#AireOS"
   root_group  = "WLC OS Type"
+}
+
+# Wait 5 seconds to mitigate API race condition
+resource "time_sleep" "ndg_wlc_aireos_wait" {
+  depends_on = [ise_network_device_group.ndg_wlc_aireos]
+  create_duration  = "5s"
+  destroy_duration = "5s"
 }
 
 resource "ise_network_device_group" "ndg_wlc_iosxe" {

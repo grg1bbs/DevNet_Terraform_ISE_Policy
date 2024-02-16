@@ -1,21 +1,10 @@
-## Issue a 10 second sleep timer before creating the Device Admin Policy Sets.
-## This is necessary to mitigate a race condition with the creation of the Network Device Groups and Allowed Protocols
-
-resource "time_sleep" "deviceadmin_wait_10_seconds" {
-  depends_on = [
-    ise_network_device_group.ndg_cisco_router,
-    ise_network_device_group.ndg_cisco_switch,
-    ise_network_device_group.ndg_cisco_wlc,
-    ise_allowed_protocols_tacacs.pap_ascii
-  ]
-  create_duration = "10s"
-}
 
 ## Create the Device Admin Policy Set -- Routers and Switches
 
 resource "ise_device_admin_policy_set" "ps_router_switch" {
   depends_on = [
-    time_sleep.deviceadmin_wait_10_seconds,
+    ise_network_device_group.ndg_cisco_router,
+    ise_network_device_group.ndg_cisco_switch,
     ise_allowed_protocols_tacacs.pap_ascii
    ]
   name                = "Routers and Switches"
@@ -50,7 +39,7 @@ resource "ise_device_admin_policy_set" "ps_router_switch" {
 resource "ise_device_admin_policy_set" "ps_wlc" {
   depends_on = [ 
     ise_device_admin_policy_set.ps_router_switch,
-    time_sleep.deviceadmin_wait_10_seconds,
+    time_sleep.ndg_wlc_aireos_wait,
     ise_allowed_protocols_tacacs.pap_ascii
   ]
   name                      = "Wireless Controllers"
@@ -94,7 +83,7 @@ resource "ise_device_admin_authentication_rule" "authc_router_switch_pap" {
 resource "ise_device_admin_authorization_rule" "authz_router_switch_readonly" {
   depends_on = [
     ise_device_admin_policy_set.ps_router_switch,
-    ise_active_directory_join_point.corp_ad,
+    time_sleep.ad_group_wait,
     data.ise_active_directory_groups_by_domain.net_monitor,
     ise_network_device_group.ndg_cisco_router,
     ise_network_device_group.ndg_cisco_switch
@@ -143,7 +132,7 @@ resource "ise_device_admin_authorization_rule" "authz_router_switch_readonly" {
 resource "ise_device_admin_authorization_rule" "authz_router_switch_admin" {
   depends_on = [
     ise_device_admin_authorization_rule.authz_router_switch_readonly,
-    ise_active_directory_join_point.corp_ad,
+    time_sleep.ad_group_wait,
     data.ise_active_directory_groups_by_domain.net_admin
    ]
   policy_set_id       = ise_device_admin_policy_set.ps_router_switch.id
@@ -212,10 +201,10 @@ resource "ise_device_admin_authentication_rule" "authc_wlc_pap" {
 
 ## Create Authorization Policies - Wireless Controllers
 
-resource "ise_device_admin_authorization_rule" "authz_airos_wlc_readonly" {
+resource "ise_device_admin_authorization_rule" "authz_aireos_wlc_readonly" {
   depends_on = [
     ise_device_admin_policy_set.ps_wlc,
-    ise_active_directory_join_point.corp_ad,
+    time_sleep.ad_group_wait,
     data.ise_active_directory_groups_by_domain.net_monitor
    ]
   policy_set_id       = ise_device_admin_policy_set.ps_wlc.id
@@ -231,7 +220,7 @@ resource "ise_device_admin_authorization_rule" "authz_airos_wlc_readonly" {
       condition_type  = "ConditionAttributes"
       is_negate       = false
       dictionary_name = "DEVICE"
-      attribute_name  = ise_network_device_group.ndg_wlc_airos.root_group
+      attribute_name  = ise_network_device_group.ndg_wlc_aireos.root_group
       operator        = "equals"
       attribute_value = "WLC OS Type#AireOS"
     },
@@ -249,8 +238,8 @@ resource "ise_device_admin_authorization_rule" "authz_airos_wlc_readonly" {
 
 resource "ise_device_admin_authorization_rule" "authz_aireos_wlc_admin" {
   depends_on = [
-    ise_device_admin_authorization_rule.authz_airos_wlc_readonly,
-    ise_active_directory_join_point.corp_ad,
+    ise_device_admin_authorization_rule.authz_aireos_wlc_readonly,
+    time_sleep.ad_group_wait,
     data.ise_active_directory_groups_by_domain.net_admin
    ]
   policy_set_id       = ise_device_admin_policy_set.ps_wlc.id
@@ -266,7 +255,7 @@ resource "ise_device_admin_authorization_rule" "authz_aireos_wlc_admin" {
       condition_type  = "ConditionAttributes"
       is_negate       = false
       dictionary_name = "DEVICE"
-      attribute_name  = ise_network_device_group.ndg_wlc_airos.root_group
+      attribute_name  = ise_network_device_group.ndg_wlc_aireos.root_group
       operator        = "equals"
       attribute_value = "WLC OS Type#AireOS"
     },
@@ -284,7 +273,7 @@ resource "ise_device_admin_authorization_rule" "authz_aireos_wlc_admin" {
 resource "ise_device_admin_authorization_rule" "authz_iosxe_wlc_readonly" {
   depends_on = [
     ise_device_admin_authorization_rule.authz_aireos_wlc_admin,
-    ise_active_directory_join_point.corp_ad,
+    time_sleep.ad_group_wait,
     data.ise_active_directory_groups_by_domain.net_monitor
    ]
   policy_set_id       = ise_device_admin_policy_set.ps_wlc.id
@@ -319,7 +308,7 @@ resource "ise_device_admin_authorization_rule" "authz_iosxe_wlc_readonly" {
 resource "ise_device_admin_authorization_rule" "authz_iosxe_wlc_admin" {
   depends_on = [
     ise_device_admin_authorization_rule.authz_iosxe_wlc_readonly,
-    ise_active_directory_join_point.corp_ad,
+    time_sleep.ad_group_wait,
     data.ise_active_directory_groups_by_domain.net_admin
    ]
   policy_set_id       = ise_device_admin_policy_set.ps_wlc.id

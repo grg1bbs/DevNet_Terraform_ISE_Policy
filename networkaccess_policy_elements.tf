@@ -38,33 +38,6 @@ resource "ise_allowed_protocols" "mab_dot1x" {
   teap_request_basic_pwd_auth                       = true
 }
 
-resource "ise_allowed_protocols" "mab_eaptls" {
-  name                         = "MAB_EAP-TLS"
-  description                  = ""
-  process_host_lookup          = true
-  allow_pap_ascii              = false
-  allow_chap                   = false
-  allow_ms_chap_v1             = false
-  allow_ms_chap_v2             = false
-  allow_eap_md5                = false
-  allow_eap_tls                = true
-  allow_leap                   = false
-  allow_peap                   = false
-  allow_eap_fast               = false
-  allow_eap_ttls               = false
-  allow_teap                   = false
-  allow_preferred_eap_protocol = false
-  eap_tls_l_bit                = false
-  allow_weak_ciphers_for_eap   = false
-  require_message_auth         = false
-
-  eap_tls_allow_auth_of_expired_certs     = false
-  eap_tls_enable_stateless_session_resume = true
-  eap_tls_session_ticket_ttl              = 5
-  eap_tls_session_ticket_ttl_unit         = "HOURS"
-  eap_tls_session_ticket_percentage       = 10
-}
-
 resource "ise_allowed_protocols" "eaptls" {
   name                         = "EAP-TLS"
   description                  = ""
@@ -93,22 +66,21 @@ resource "ise_allowed_protocols" "eaptls" {
 }
 
 ## Create a Certificate Authentication Profile (CAP)
-## Commented out due to bug ID CSCwe48292
+## Issues with destroy due to bug ID CSCwe48292
 
-# resource "ise_certificate_authentication_profile" "certprof_ad" {
-#   depends_on = [
-#     ise_active_directory_join_point.corp_ad
-#   ]
-# 
-#   name                         = "CertProf_AD"
-#   description                  = "AD Cert Profile"
-#   external_identity_store_name = ise_active_directory_join_point.corp_ad.name
-#   allowed_as_user_name         = false
-#   certificate_attribute_name   = "SUBJECT_COMMON_NAME"
-#   match_mode                   = "RESOLVE_IDENTITY_AMBIGUITY"
-#   username_from                = "CERTIFICATE"
-# }
+resource "ise_certificate_authentication_profile" "certprof_ad" {
+  depends_on = [
+    ise_active_directory_join_point.corp_ad
+  ]
 
+  name                         = "CertProf_AD"
+  description                  = "AD Cert Profile"
+  external_identity_store_name = ise_active_directory_join_point.corp_ad.name
+  allowed_as_user_name         = false
+  certificate_attribute_name   = "SUBJECT_COMMON_NAME"
+  match_mode                   = "RESOLVE_IDENTITY_AMBIGUITY"
+  username_from                = "CERTIFICATE"
+}
 
 ## Create an Identity Source Sequence using the CAP and AD Join Point
 
@@ -116,12 +88,10 @@ resource "ise_identity_source_sequence" "iss_ad_cert" {
   name                               = "ISS_AD_Cert"
   description                        = ""
   break_on_store_fail                = false
-  certificate_authentication_profile = "Preloaded_Certificate_Profile"
-#  certificate_authentication_profile = ise_certificate_authentication_profile.certprof_ad.name
+  certificate_authentication_profile = ise_certificate_authentication_profile.certprof_ad.name
   identity_sources = [
     {
-      name = ise_active_directory_join_point.corp_ad.name
-      # name  = ise_certificate_authentication_profile.certprof_ad.external_identity_store_name
+      name  = ise_certificate_authentication_profile.certprof_ad.external_identity_store_name
       order = 1
     }
   ]
@@ -135,13 +105,28 @@ resource "ise_network_device_group" "ndg_deployment_stage" {
   root_group  = "Deployment Stage"
 }
 
+# Wait 5 seconds to mitigate API race condition
+resource "time_sleep" "ndg_root_wait" {
+  depends_on = [ise_network_device_group.ndg_deployment_stage]
+  create_duration  = "5s"
+  destroy_duration = "5s"
+}
+
 resource "ise_network_device_group" "ndg_mm" {
   depends_on = [
-    ise_network_device_group.ndg_deployment_stage
+    ise_network_device_group.ndg_deployment_stage,
+    time_sleep.ndg_root_wait
   ]
   description = "Monitor Mode NDG"
   name        = "Deployment Stage#Deployment Stage#Monitor Mode"
   root_group  = ise_network_device_group.ndg_deployment_stage.root_group
+}
+
+# Wait 5 seconds to mitigate API race condition
+resource "time_sleep" "ndg_mm_wait" {
+  depends_on = [ise_network_device_group.ndg_mm]
+  create_duration  = "5s"
+  destroy_duration = "5s"
 }
 
 resource "ise_network_device_group" "ndg_lim" {

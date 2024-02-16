@@ -1,21 +1,10 @@
-## Issue a 10 second sleep timer before creating the Network Access Policy Set
-## This is necessary to mitigate a race condition with the creation of the Network Device Groups and Allowed Protocols
-
-resource "time_sleep" "mm_wait_10_seconds" {
-  depends_on = [
-    ise_allowed_protocols.mab_dot1x,
-    ise_network_device_group.ndg_deployment_stage,
-    ise_network_device_group.ndg_mm
-  ]
-  create_duration = "10s"
-}
 
 ## Create the Policy Set for Wired Monitor Mode
 
-
 resource "ise_network_access_policy_set" "ps_wired_mm" {
   depends_on = [
-    time_sleep.mm_wait_10_seconds
+    ise_allowed_protocols.mab_dot1x,
+    time_sleep.ndg_mm_wait
   ]
   name                = var.ps_wired_mm_name
   description         = "Wired Monitor Mode"
@@ -331,15 +320,13 @@ data "ise_network_access_policy_set" "ps_wired_mm" {
 }
 
 data "ise_network_access_authorization_rule" "mm_authz_default" {
-#  depends_on = [
-#    ise_network_access_authorization_rule.mm_authz_ad_user,
-#    ise_network_access_authorization_rule.mm_authz_ad_computer
-#  ]
+  depends_on = [
+    ise_network_access_authorization_rule.mm_authz_ad_computer_eaptls
+  ]
   policy_set_id = data.ise_network_access_policy_set.ps_wired_mm.id
   name          = "Default"
 }
 
-/*
 ## Update Wired MM Default AuthZ Policy Rule to replace 'DenyAccess' with 'MM-AuthZ-Default' AuthZ Profile -- ISSUE OPENED
 
 resource "ise_network_access_authorization_rule" "mm_authz_default" {
@@ -358,8 +345,3 @@ resource "ise_network_access_authorization_rule" "mm_authz_default" {
   ]
 }
 
-import {
-  to = ise_network_access_authorization_rule.mm_authz_default
-  id = "${data.ise_network_access_policy_set.ps_wired_mm.id},${data.ise_network_access_authorization_rule.mm_authz_default.id}"
-}
-*/

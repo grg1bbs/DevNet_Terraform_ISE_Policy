@@ -1,21 +1,10 @@
-## Issue a 10 second sleep timer before creating the Network Access Policy Set
-## This is necessary to mitigate a race condition with the creation of the Network Device Groups and Allowed Protocols
-
-resource "time_sleep" "lim_wait_10_seconds" {
-  depends_on = [
-    ise_allowed_protocols.mab_dot1x,
-    ise_network_device_group.ndg_deployment_stage,
-    ise_network_device_group.ndg_lim,
-    ise_network_access_policy_set.ps_wired_mm
-  ]
-  create_duration = "10s"
-}
 
 ## Create the Policy Set for Wired Low Impact Mode
 
 resource "ise_network_access_policy_set" "ps_wired_lim" {
   depends_on = [
-    time_sleep.lim_wait_10_seconds
+    ise_allowed_protocols.mab_dot1x,
+    ise_network_access_policy_set.ps_wired_mm
   ]
   name                = var.ps_wired_lim_name
   description         = "Wired Low Impact Mode"
@@ -312,42 +301,34 @@ resource "ise_network_access_authorization_rule" "lim_authz_ad_computer_eaptls" 
   security_group = ise_trustsec_security_group.sgt_corp_user.name
 }
 
-## Update Wired_LIM Default AuthZ Policy Rule to replace 'DenyAccess' with 'LIM-AuthZ-Default' AuthZ Profile -- ISSUE OPEN
+## Get ID for Default AuthZ Policy rule
 
-/*
-
-data "ise_network_access_authorization_rule" "lim_authz_rules" {
-#  depends_on = [
-#    ise_network_access_authorization_rule.lim_authz_ad_user,
-#    ise_network_access_authorization_rule.lim_authz_ad_computer
-#  ]
-  policy_set_id = ise_network_access_policy_set.ps_wired_lim.id
-  name = "Default"
+data "ise_network_access_policy_set" "ps_wired_lim" {
+  name = ise_network_access_policy_set.ps_wired_lim.name
 }
 
-
-
-## Update Wired_LIM Default AuthZ Policy Rule to replace 'DenyAccess' with 'LIM-AuthZ-Default' AuthZ Profile -- BUG OPEN
-
-resource "ciscoise_network_access_authorization_rules_update" "lim_authz_default" {
-  provider = ciscoise
+data "ise_network_access_authorization_rule" "lim_authz_default" {
   depends_on = [
-    ciscoise_network_access_authorization_rules.lim_authz_ad_user,
-    ciscoise_network_access_authorization_rules.lim_authz_ad_computer
+    ise_network_access_authorization_rule.lim_authz_ad_computer_eaptls
   ]
-  parameters {
-    policy_id = ciscoise_network_access_policy_set.ps_wired_lim.parameters[0].id
-    id        = data.ciscoise_network_access_authorization_rules.lim_authz_rules.items[2].rule[0].id
-    profile = [
-      "lim-AuthZ-Default"
-    ]
-    rule {
-      name    = "Default"
-      rank    = 2
-      state   = "enabled"
-      default = true
-    }
-  }
+  policy_set_id = data.ise_network_access_policy_set.ps_wired_lim.id
+  name          = "Default"
 }
 
-*/
+## Update Wired MM Default AuthZ Policy Rule to replace 'DenyAccess' with 'MM-AuthZ-Default' AuthZ Profile -- ISSUE OPENED
+
+resource "ise_network_access_authorization_rule" "lim_authz_default" {
+  depends_on = [
+    ise_network_access_policy_set.ps_wired_lim,
+    data.ise_network_access_policy_set.ps_wired_lim,
+    data.ise_network_access_authorization_rule.lim_authz_default
+   ]
+  policy_set_id = data.ise_network_access_policy_set.ps_wired_lim.id
+  name          = "Default"
+  default       = true
+  rank          = data.ise_network_access_authorization_rule.lim_authz_default.rank
+  state         = "enabled"
+  profiles = [
+    ise_authorization_profile.lim_authz_default.name
+  ]
+}

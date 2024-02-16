@@ -98,3 +98,9 @@ resource "ise_active_directory_add_groups" "ad_domain_groups" {
   ]
 }
 
+# Wait 5 seconds to mitigate API race conditions
+resource "time_sleep" "ad_group_wait" {
+  depends_on = [ise_active_directory_add_groups.ad_domain_groups]
+  create_duration  = "5s"
+  destroy_duration = "5s"
+}
