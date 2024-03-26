@@ -6,9 +6,9 @@ This code is intended to build policy that is common amongst customer ISE deploy
 Separate files were used purposely to separate out the various policy elements in an attempt to make it easier to read and modify the resources being created. If a more monolithic approach is desired, the code can be collapsed into fewer files.
 
 This code was validated using the following:
- - Cisco ISE 3.2 patch 4
- - Terraform version: 1.6.6
- - CiscoDevNet Terraform provider version: 0.1.13
+ - Cisco ISE 3.2 patch 5
+ - Terraform version: 1.7.5
+ - CiscoDevNet Terraform provider version: 0.1.14
  
 The CiscoDevNet ISE Terraform Provider documentation can be found here:
 https://registry.terraform.io/providers/CiscoDevNet/ise/latest/docs
@@ -171,7 +171,7 @@ https://bst.cloudapps.cisco.com/bugsearch/bug/CSCwe48292
 Unless any errors are found, after the resource build is complete, the resulting status should be:
 
 ```diff
-+ Apply complete! Resources: 76 added, 0 changed, 0 destroyed.
++ Apply complete! Resources: 72 added, 0 changed, 0 destroyed.
 ```
 
 If you check the terraform state, you should see the following resources:
@@ -263,10 +263,6 @@ ise_tacacs_profile.ios_admin_priv10
 ise_tacacs_profile.ios_admin_priv15
 ise_trustsec_security_group.sgt_corp_user
 time_sleep.ad_group_wait
-time_sleep.ndg_mm_wait
-time_sleep.ndg_root_wait
-time_sleep.ndg_wlc_aireos_wait
-time_sleep.ndg_wlc_os_wait
 ```
 
 ### Teardown
