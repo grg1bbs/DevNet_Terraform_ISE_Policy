@@ -16,13 +16,6 @@ resource "ise_network_device_group" "ndg_wlc_os_type" {
   root_group  = "WLC OS Type"
 }
 
-# Wait 5 seconds to mitigate API race condition
-resource "time_sleep" "ndg_wlc_os_wait" {
-  depends_on = [ise_network_device_group.ndg_wlc_os_type]
-  create_duration  = "5s"
-  destroy_duration = "5s"
-}
-
 resource "ise_network_device_group" "ndg_wlc_aireos" {
   depends_on = [ 
     ise_network_device_group.ndg_wlc_os_type
@@ -30,13 +23,6 @@ resource "ise_network_device_group" "ndg_wlc_aireos" {
   description = "AirOS WLCs"
   name        = "WLC OS Type#WLC OS Type#AireOS"
   root_group  = "WLC OS Type"
-}
-
-# Wait 5 seconds to mitigate API race condition
-resource "time_sleep" "ndg_wlc_aireos_wait" {
-  depends_on = [ise_network_device_group.ndg_wlc_aireos]
-  create_duration  = "5s"
-  destroy_duration = "5s"
 }
 
 resource "ise_network_device_group" "ndg_wlc_iosxe" {
@@ -57,18 +43,12 @@ resource "ise_network_device_group" "ndg_cisco_switch" {
 }
 
 resource "ise_network_device_group" "ndg_cisco_router" {
-  depends_on = [
-    ise_network_device_group.ndg_cisco_switch
-   ]
   description = "Cisco IOS/IOS-XE routers"
   name        = "Device Type#All Device Types#Cisco Router"
   root_group  = "Device Type"
 }
 
 resource "ise_network_device_group" "ndg_cisco_wlc" {
-  depends_on = [
-  ise_network_device_group.ndg_cisco_router
-  ]
   description = "Cisco Wireless LAN Controllers"
   name        = "Device Type#All Device Types#Cisco WLC"
   root_group  = "Device Type"

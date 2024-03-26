@@ -105,35 +105,13 @@ resource "ise_network_device_group" "ndg_deployment_stage" {
   root_group  = "Deployment Stage"
 }
 
-# Wait 5 seconds to mitigate API race condition
-resource "time_sleep" "ndg_root_wait" {
-  depends_on = [ise_network_device_group.ndg_deployment_stage]
-  create_duration  = "5s"
-  destroy_duration = "5s"
-}
-
 resource "ise_network_device_group" "ndg_mm" {
-  depends_on = [
-    ise_network_device_group.ndg_deployment_stage,
-    time_sleep.ndg_root_wait
-  ]
   description = "Monitor Mode NDG"
   name        = "Deployment Stage#Deployment Stage#Monitor Mode"
   root_group  = ise_network_device_group.ndg_deployment_stage.root_group
 }
 
-# Wait 5 seconds to mitigate API race condition
-resource "time_sleep" "ndg_mm_wait" {
-  depends_on = [ise_network_device_group.ndg_mm]
-  create_duration  = "5s"
-  destroy_duration = "5s"
-}
-
 resource "ise_network_device_group" "ndg_lim" {
-  depends_on = [
-    ise_network_device_group.ndg_deployment_stage,
-    ise_network_device_group.ndg_mm
-  ]
   description = "Low Impact Mode NDG"
   name        = "Deployment Stage#Deployment Stage#Low Impact Mode"
   root_group  = ise_network_device_group.ndg_deployment_stage.root_group

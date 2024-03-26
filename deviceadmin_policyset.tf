@@ -3,9 +3,9 @@
 
 resource "ise_device_admin_policy_set" "ps_router_switch" {
   depends_on = [
-    ise_network_device_group.ndg_cisco_router,
+    ise_allowed_protocols_tacacs.pap_ascii,
     ise_network_device_group.ndg_cisco_switch,
-    ise_allowed_protocols_tacacs.pap_ascii
+    ise_network_device_group.ndg_cisco_router
    ]
   name                = "Routers and Switches"
   description         = ""
@@ -39,8 +39,8 @@ resource "ise_device_admin_policy_set" "ps_router_switch" {
 resource "ise_device_admin_policy_set" "ps_wlc" {
   depends_on = [ 
     ise_device_admin_policy_set.ps_router_switch,
-    time_sleep.ndg_wlc_aireos_wait,
-    ise_allowed_protocols_tacacs.pap_ascii
+    ise_allowed_protocols_tacacs.pap_ascii,
+    ise_network_device_group.ndg_cisco_wlc
   ]
   name                      = "Wireless Controllers"
   description               = ""
