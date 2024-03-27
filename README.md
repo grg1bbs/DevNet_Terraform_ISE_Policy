@@ -6,7 +6,7 @@ This code is intended to build policy that is common amongst customer ISE deploy
 Separate files were used purposely to separate out the various policy elements in an attempt to make it easier to read and modify the resources being created. If a more monolithic approach is desired, the code can be collapsed into fewer files.
 
 This code was validated using the following:
- - Cisco ISE 3.2 patch 5
+ - Cisco ISE versions 3.2 patch 5 & 3.3 patch 1
  - Terraform version: 1.7.5
  - CiscoDevNet Terraform provider version: 0.1.14
  
